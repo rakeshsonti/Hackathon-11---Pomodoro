@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 const Pomodoro = () => {
    const [workTime, setWorkTime] = useState(25);
-   const [breakTime, setBreakTime] = useState(0);
+   const [breakTime, setBreakTime] = useState(5);
    const [workInput, setWorkInput] = useState(25);
    const [breakInput, setBreakInput] = useState(5);
    const [startButton, setStartButton] = useState(false);
@@ -19,16 +19,22 @@ const Pomodoro = () => {
          const intervalId = setInterval(() => {
             if (breakTime > 0) {
                const newBreakTime = breakTime - 1;
-               setBreakTime(newBreakTime);
-            } else {
-               if (workTime === 0 && breakTime === 0) {
-                  setBreakTime(5);
-                  setWorkTime(25);
-               }
-               const newWorkTime = workTime - 1;
-               const newBreakTime = 59;
+               const newWorkTime = workTime;
                setBreakTime(newBreakTime);
                setWorkTime(newWorkTime);
+            } else {
+               if (workTime === 0 && breakTime === 1) {
+                  alert("wort duration is over");
+                  setWorkTime(5);
+                  setBreakTime(0);
+               } else {
+                  if (workTime > 0 && breakTime == 1) {
+                     const newWorkTime = workTime - 1;
+                     const newBreakTime = 59;
+                     setBreakTime(newBreakTime);
+                     setWorkTime(newWorkTime);
+                  }
+               }
             }
          }, 1 * 1000);
          return () => {
@@ -94,7 +100,12 @@ const Pomodoro = () => {
             <input
                onChange={(evn) => {
                   const num = evn.target.value;
-                  if (isNaN(num) || num === null || num === undefined) {
+                  if (
+                     isNaN(num) ||
+                     num === null ||
+                     num === undefined ||
+                     num < 0
+                  ) {
                      setWorkInput(25);
                   } else {
                      setWorkInput(Number(evn.target.value));
@@ -109,8 +120,13 @@ const Pomodoro = () => {
             <input
                onChange={(evn) => {
                   const num = evn.target.value;
-                  if (isNaN(num) || num === null || num === undefined) {
-                     // setBreakInput(5);
+                  if (
+                     isNaN(num) ||
+                     num === null ||
+                     num === undefined ||
+                     num < 0
+                  ) {
+                     setBreakInput(5);
                   } else {
                      setBreakInput(Number(evn.target.value));
                   }
