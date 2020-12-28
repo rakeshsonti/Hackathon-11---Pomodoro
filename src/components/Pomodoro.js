@@ -17,23 +17,21 @@ const Pomodoro = () => {
    useEffect(() => {
       if (startButton) {
          const intervalId = setInterval(() => {
-            if (breakTime > 0) {
+            if (breakTime > 1) {
                const newBreakTime = breakTime - 1;
                const newWorkTime = workTime;
                setBreakTime(newBreakTime);
                setWorkTime(newWorkTime);
             } else {
                if (workTime === 0 && breakTime === 1) {
-                  alert("wort duration is over");
+                  alert("work duration is over");
                   setWorkTime(5);
                   setBreakTime(0);
                } else {
-                  if (workTime > 0 && breakTime == 1) {
-                     const newWorkTime = workTime - 1;
-                     const newBreakTime = 59;
-                     setBreakTime(newBreakTime);
-                     setWorkTime(newWorkTime);
-                  }
+                  const newWorkTime = workTime - 1;
+                  const newBreakTime = 59;
+                  setBreakTime(newBreakTime);
+                  setWorkTime(newWorkTime);
                }
             }
          }, 1 * 1000);
