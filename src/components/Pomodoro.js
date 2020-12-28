@@ -116,6 +116,7 @@ const Pomodoro = () => {
                value={workInput}
             ></input>
             <input
+               type="number"
                onChange={(evn) => {
                   const num = evn.target.value;
                   if (
