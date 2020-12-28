@@ -9,6 +9,12 @@ const Pomodoro = () => {
    const [inputButton, setInputButton] = useState(false);
    const [resetButton, setResetButton] = useState(true);
    useEffect(() => {
+      setWorkTime(25);
+      setBreakTime(5);
+      setWorkInput(25);
+      setBreakInput(5);
+   }, []);
+   useEffect(() => {
       if (startButton) {
          const intervalId = setInterval(() => {
             if (breakTime > 0) {
@@ -73,6 +79,8 @@ const Pomodoro = () => {
                onClick={() => {
                   setWorkTime(25);
                   setBreakTime(0);
+                  setWorkInput(25);
+                  setBreakInput(0);
                   setResetButton(true);
                   setStopButton(true);
                   setStartButton(false);
@@ -96,7 +104,7 @@ const Pomodoro = () => {
                data-testid="work-duration"
                placeholder="work duration"
                disabled={inputButton}
-               value={25}
+               value={workInput}
             ></input>
             <input
                onChange={(evn) => {
@@ -110,13 +118,20 @@ const Pomodoro = () => {
                data-testid="break-duration"
                placeholder="break duration"
                disabled={inputButton}
-               value={5}
+               value={breakInput}
             ></input>
             <button
                data-testid="set-btn"
                onClick={() => {
-                  setWorkTime(workInput);
-                  setBreakTime(breakInput);
+                  if (workInput == 0 && breakInput == 0) {
+                     setWorkTime(25);
+                     setBreakTime(5);
+                     setWorkInput(25);
+                     setBreakInput(5);
+                  } else {
+                     setWorkTime(workInput);
+                     setBreakTime(breakInput);
+                  }
                }}
                disabled={inputButton}
             >
