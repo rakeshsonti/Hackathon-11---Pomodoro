@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 const Pomodoro = () => {
    const [workTime, setWorkTime] = useState(25);
-   const [breakTime, setBreakTime] = useState(5);
+   const [breakTime, setBreakTime] = useState(0);
    const [workInput, setWorkInput] = useState(25);
    const [breakInput, setBreakInput] = useState(5);
    const [startButton, setStartButton] = useState(false);
@@ -36,76 +36,93 @@ const Pomodoro = () => {
             {workTime}:{breakTime}
          </h1>
          <h1>workTime</h1>
-         <button
-            data-testid="start-btn"
-            onClick={() => {
-               setStartButton(true);
-               setStopButton(false);
-               setResetButton(false);
-               setInputButton(true);
+         <div
+            style={{
+               display: "flex",
+               flexDirection: "row",
+               justifyContent: "center",
+               color: "black",
             }}
-            disabled={startButton}
          >
-            Start
-         </button>
-         <button
-            data-testid="stop-btn"
-            onClick={() => {
-               setStartButton(false);
-               setInputButton(true);
-            }}
-            disabled={stopButton}
-         >
-            Stop
-         </button>
-         <button
-            data-testid="reset-btn"
-            onClick={() => {
-               setWorkTime(25);
-               setBreakTime(5);
-            }}
-            disabled={resetButton}
-         >
-            Reset
-         </button>
-         <br />
-         <input
-            onChange={(evn) => {
-               const num = evn.target.value;
-               if (isNaN(num) || num === null || num === undefined) {
-                  setWorkInput(25);
-               } else {
-                  setWorkInput(Number(evn.target.value));
-               }
-            }}
-            type="number"
-            data-testid="work-duration"
-            placeholder="work duration"
-            disabled={inputButton}
-         ></input>
-         <input
-            onChange={(evn) => {
-               const num = evn.target.value;
-               if (isNaN(num) || num === null || num === undefined) {
-                  setBreakInput(5);
-               } else {
-                  setBreakInput(Number(evn.target.value));
-               }
-            }}
-            data-testid="break-duration"
-            placeholder="break duration"
-            disabled={inputButton}
-         ></input>
-         <button
-            data-testid="set-btn"
-            onClick={() => {
-               setWorkTime(workInput);
-               setBreakTime(breakInput);
-            }}
-            disabled={inputButton}
-         >
-            Set
-         </button>
+            <button
+               data-testid="start-btn"
+               onClick={() => {
+                  setStartButton(true);
+                  setStopButton(false);
+                  setResetButton(false);
+                  setInputButton(true);
+               }}
+               disabled={startButton}
+            >
+               Start
+            </button>
+            <button
+               data-testid="stop-btn"
+               onClick={() => {
+                  setStartButton(false);
+                  setInputButton(false);
+                  setResetButton(false);
+                  setStopButton(true);
+               }}
+               disabled={stopButton}
+            >
+               Stop
+            </button>
+            <button
+               data-testid="reset-btn"
+               onClick={() => {
+                  setWorkTime(25);
+                  setBreakTime(0);
+                  setResetButton(true);
+                  setStopButton(true);
+                  setStartButton(false);
+                  setInputButton(false);
+               }}
+               disabled={resetButton}
+            >
+               Reset
+            </button>
+            <br />
+            <input
+               onChange={(evn) => {
+                  const num = evn.target.value;
+                  if (isNaN(num) || num === null || num === undefined) {
+                     setWorkInput(25);
+                  } else {
+                     setWorkInput(Number(evn.target.value));
+                  }
+               }}
+               type="number"
+               data-testid="work-duration"
+               placeholder="work duration"
+               disabled={inputButton}
+               value={25}
+            ></input>
+            <input
+               onChange={(evn) => {
+                  const num = evn.target.value;
+                  if (isNaN(num) || num === null || num === undefined) {
+                     // setBreakInput(5);
+                  } else {
+                     setBreakInput(Number(evn.target.value));
+                  }
+               }}
+               data-testid="break-duration"
+               placeholder="break duration"
+               disabled={inputButton}
+               value={5}
+            ></input>
+            <button
+               data-testid="set-btn"
+               onClick={() => {
+                  setWorkTime(workInput);
+                  setBreakTime(breakInput);
+               }}
+               disabled={inputButton}
+            >
+               Set
+            </button>
+         </div>
       </div>
    );
 };
